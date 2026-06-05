@@ -1,25 +1,23 @@
-# Global Claude Code Operating Context
+# Global Claude Code Context
 
 Intended target: `~/.claude/CLAUDE.md`. This is durable context for Claude
 Code, not an enforcement layer. Hard blocks, permissions, sandboxing, hooks,
 plugin state, and environment policy belong in Claude settings, managed
 settings, project settings, hooks, and permission rules.
 
-Keep this file dense. Bias toward caution, verification, and scope control;
-stay lightweight for trivial read-only or one-command tasks. Put repo-only
-rules in repo `CLAUDE.md`, `CLAUDE.local.md`, `.claude/rules/`, skills, or
-project memory.
+Keep this file dense. Favor caution, verification, and scope control. Stay
+lightweight for trivial read-only or one-command tasks. Put repo-only rules in
+repo `CLAUDE.md`, `CLAUDE.local.md`, `.claude/rules/`, skills, or project
+memory.
 
 ## Identity And Machine
 
-- User/workspace: replace this with the minimum durable facts the agent should
-  know in every session.
+- User/workspace: keep only facts the agent should carry into every session.
 - OS/runtime: name the package manager, shell, target runtimes, and platform
   constraints that prevent bad assumptions.
-- Project roots: document where active work usually lives and how to resolve
-  path drift.
-- Private notes and project docs: state where each belongs. Do not put secrets,
-  private employer/customer data, or personal memory in this file.
+- Project roots: state where active work lives and how to resolve path drift.
+- Private notes and project docs: state where each belongs. Keep secrets,
+  employer data, customer data, and personal memory out of this file.
 
 ## Claude Code Loading Reality
 
@@ -58,17 +56,17 @@ project memory.
 ## Work Discipline
 
 - Optimize for correct, small, verifiable changes. Every changed line should
-  trace to the user request or a required verification/fix.
+  trace to the request or a required verification/fix.
 - Do not add speculative abstractions, configurability, helper scripts, files,
-  or workflows just because they might be useful later.
+  or workflows because they might be useful later.
 - Preserve existing style and ownership boundaries. Do not refactor adjacent
   code, rewrite comments, or reorder files unless necessary.
 - When interpretations diverge, state the fork and either ask or make the
   lowest-risk reversible assumption.
 - Reproduce bugs before fixing when feasible; prefer failing tests or observed
   failures over inference.
-- Use the simplest correct version first. If work grows materially larger than
-  the simple path, pause and simplify.
+- Use the simplest correct version first. If work grows larger than the simple
+  path, pause and simplify.
 - Clean up only scratch files and unused code created by your change; mention
   pre-existing dead code instead of deleting it unless asked.
 - Prefer runtime APIs, CLIs, web APIs, or platform automation over direct
@@ -104,7 +102,7 @@ project memory.
   authorizes a safe path and permissions allow it.
 - Before external uploads, network calls, connector use, or remote tool calls
   involving sensitive data, name the data, destination, and reason.
-- Do not disable secret scans or redaction guards. Narrow false positives.
+- Keep secret scans and redaction guards in place. Narrow false positives.
 
 ## Context, Cache, Plugins, And Agents
 
@@ -116,7 +114,7 @@ project memory.
 - Send large research or broad file reads to subagents only when their compact,
   source-grounded summaries are enough for the main thread.
 - Do not spawn swarms by default. Use zero to two agents unless parallel work
-  clearly reduces real complexity. The parent owns decisions and verification.
+  reduces real complexity. The parent owns decisions and verification.
 - Do not add default plugin or MCP load casually. Check settings before assuming
   tools are available.
 
@@ -159,8 +157,8 @@ error repeats three times, stop the loop and change approach.
 
 ## Local Routes And Domain Defaults
 
-- Keep domain-specific workflows in skills, project instructions, or reference
-  docs. Name only the stable entry points that are worth loading globally.
+- Keep domain workflows in skills, project instructions, or reference docs. Name
+  only stable entry points worth loading globally.
 - For specialized artifacts such as spreadsheets, reports, presentations,
   frontend work, or data analysis, use the relevant local skill or standard
   before improvising.

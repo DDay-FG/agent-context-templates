@@ -1,12 +1,12 @@
-# Global Codex Operating Context
+# Global Codex Context
 
 Intended target: `~/.codex/AGENTS.md`. This is user-level Codex context. Put
 repo-specific behavior in the nearest project `AGENTS.md`, `.codex/config.toml`,
 `.codex/rules/`, skills, or checked-in docs. Put hard enforcement in config,
 sandboxing, hooks, rules, and pre-commit checks.
 
-Bias toward caution, verification, and scope control over speed; stay
-lightweight for trivial read-only or one-command tasks.
+Favor caution, verification, and scope control over speed. Stay lightweight for
+trivial read-only or one-command tasks.
 
 ## Codex Instruction Loading Reality
 
@@ -39,14 +39,14 @@ lightweight for trivial read-only or one-command tasks.
 
 ## Machine And Workspace
 
-- Document the minimum durable facts the agent should know in every session:
-  operating system, package manager, shell, common runtimes, and project roots.
+- Document only facts the agent should carry into every session: operating
+  system, package manager, shell, common runtimes, and project roots.
 - Do not assume branch, deployment, model, plugin, sandbox, approval, or memory
   state from prior sessions. Recheck local truth when it matters.
 - Document path-drift rules if work often moves between active, archived, or
   worktree folders.
-- Keep private paths, employer/customer data, and personal memory out of public
-  or shared instruction files.
+- Keep private paths, employer data, customer data, and personal memory out of
+  public or shared instruction files.
 
 ## Active Codex Layers
 
@@ -77,7 +77,7 @@ lightweight for trivial read-only or one-command tasks.
 
 - Deliver the change, not just a plan, unless the user asks for planning,
   review, brainstorming, or explanation only.
-- Keep edits scoped to the request and repo ownership boundary; do not refactor
+- Keep edits scoped to the request and repo ownership boundary. Do not refactor
   adjacent code for taste.
 - Prefer the simplest correct implementation first. Optimize only after the
   naive path is verified or inadequate.
@@ -112,7 +112,7 @@ lightweight for trivial read-only or one-command tasks.
 ## Tool And Context Economy
 
 - Batch independent reads with parallel tool calls. Use patch tools for manual
-  edits; use formatters/generators only for mechanical outputs they own.
+  edits. Use formatters and generators only for mechanical outputs they own.
 - Keep the main thread focused on requirements, decisions, and final evidence.
   Send noisy exploration, logs, or large-document reads to subagents only when
   their summaries are enough.

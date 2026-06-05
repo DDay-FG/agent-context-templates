@@ -1,54 +1,59 @@
 # Agent Context Templates
 
-Hardened starting points for global Claude Code and Codex instructions.
+Global instruction files for Claude Code and Codex.
 
-These files are meant to be copied, edited, and made boringly specific to a
-real workflow. The point is not to make an agent sound more confident. The
-point is to make it slower to drift, cheaper to correct, and easier to verify.
+These templates came from repeated agent work: missed assumptions, swollen
+diffs, stale memory, skipped checks, and tool sprawl. They are built to keep an
+agent close to the work.
 
-## What Is Here
+Use them as starting points. Cut them hard. Keep only rules that survive contact
+with your own repos.
 
-- `CLAUDE.md`: a global Claude Code context template.
-- `AGENTS.md`: a global Codex context template.
+## Files
 
-Both files separate three concerns that are easy to blur:
+- `CLAUDE.md`: global context for Claude Code.
+- `AGENTS.md`: global context for Codex.
 
-- Durable guidance: what belongs in a global instruction file.
-- Local/project guidance: what belongs in repo-level files.
-- Enforcement: what belongs in settings, permissions, sandboxing, hooks, rules,
-  tests, linters, and pre-commit checks instead of prose.
+Each file keeps a firm line between:
 
-## How To Use
+- durable guidance for every session
+- project guidance that belongs near the code
+- enforcement that belongs in settings, hooks, tests, linters, sandboxing, or
+  pre-commit checks
 
-1. Read the file for the tool you use.
-2. Replace bracketed placeholders and remove sections that do not match your
-   workflow.
-3. Keep global files compact. Put build commands, repo architecture, PR rules,
-   and deployment details in the nearest project-level instruction file.
-4. Do not paste secrets, private paths, employer/customer data, or personal
-   memory into these files.
-5. Verify the tool is actually loading the file before trusting it.
+## Install
 
-Typical targets:
+Copy the file for your tool:
 
 ```text
 Claude Code: ~/.claude/CLAUDE.md
 Codex:       ~/.codex/AGENTS.md
 ```
 
-## Design Bias
+Then edit it.
 
-These templates bias toward:
+Remove anything that does not match your machine. Add only facts an agent should
+carry into every session. Put build commands, repo architecture, deployment
+rules, and PR rules in project-level files.
 
-- small, traceable changes
+Do not paste secrets, private paths, employer data, customer data, or personal
+memory into global instructions.
+
+After installation, ask the tool to list the instruction files it loaded. Trust
+the file only after the tool proves it is reading it.
+
+## Bias
+
+The templates favor:
+
+- small diffs
 - explicit assumptions
-- tests or concrete checks before success claims
-- clear handling of untrusted context
-- fewer default tools and plugins
-- repo-local instructions over global sprawl
+- tests before success claims
+- concrete handling of untrusted context
+- fewer default tools
+- repo-local detail
 
-They are intentionally not exhaustive. A short instruction that is true and
-easy to obey beats a long instruction that sounds complete.
+A short true rule beats a long impressive one.
 
 ## License
 
