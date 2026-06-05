@@ -81,6 +81,128 @@ memory into global instructions.
 After installation, ask the tool to list the instruction files it loaded. Trust
 the file only after the tool proves it is reading it.
 
+## Have Your Agents Install This
+
+Paste this into Claude Code or Codex:
+
+```text
+Install the global agent context templates from:
+https://github.com/DDay-FG/agent-context-templates
+
+Goal:
+Safely adopt the right template for this tool without dropping critical local
+context from the existing global instruction file.
+
+Rules:
+- Do not overwrite the current global file until you have staged the new file,
+  inspected the old file, preserved critical local context, and shown a diff.
+- Do not copy secrets, tokens, private employer/client data, or stale project
+  facts into any shared repo file.
+- Local private paths may belong in the user's private global file. They do not
+  belong in a public template.
+- Keep Claude Code and Codex files distinct. Do not blindly convert one format
+  into the other.
+
+1. Detect the tool and target file.
+
+- Claude Code target:
+  ~/.claude/CLAUDE.md
+- Codex target:
+  ~/.codex/AGENTS.md
+
+For Codex, also inspect ~/.codex/AGENTS.override.md and ~/.codex/config.toml if
+they exist. If this machine has a CODEX.md file or a configured fallback name,
+inspect it too and explain whether Codex actually loads it. Do not assume
+CODEX.md is the governing file unless local config proves it.
+
+2. Download templates into a staging directory.
+
+Run:
+
+mkdir -p "${TMPDIR:-/tmp}/agent-context-templates-install"
+cd "${TMPDIR:-/tmp}/agent-context-templates-install"
+curl -fsSL https://raw.githubusercontent.com/DDay-FG/agent-context-templates/main/CLAUDE.md -o CLAUDE.md
+curl -fsSL https://raw.githubusercontent.com/DDay-FG/agent-context-templates/main/AGENTS.md -o AGENTS.md
+wc -l CLAUDE.md AGENTS.md
+
+Read the staged file for this tool before editing it.
+
+3. Inspect the existing global context before changing anything.
+
+Read the target file if it exists. Also inspect nearby files that may affect
+loading:
+
+- Claude Code: ~/.claude/CLAUDE.md, ~/.claude/CLAUDE.local.md, relevant
+  .claude/rules files, and managed/user settings if available.
+- Codex: ~/.codex/AGENTS.md, ~/.codex/AGENTS.override.md, ~/.codex/config.toml,
+  and any configured fallback instruction filename.
+
+Summarize what currently matters. Preserve only current, useful guidance.
+
+4. Merge critical local context into the staged template.
+
+Keep or add durable local facts such as:
+
+- operating system, shell, package manager, and common runtimes
+- active project roots and path-drift rules
+- local reporting, memory, skill, hook, or review workflows
+- security rules, privacy boundaries, and approval expectations
+- default verification commands that apply across most projects
+- tool-specific loading notes that are true on this machine
+
+Remove placeholder text and generic sections that do not fit. If a rule belongs
+to one repository, move it to that repository's local CLAUDE.md or AGENTS.md
+instead of putting it in the global file.
+
+5. Build a candidate file and show the user the diff.
+
+Create a candidate next to the target, for example:
+
+- ~/.claude/CLAUDE.md.candidate
+- ~/.codex/AGENTS.md.candidate
+
+Compare old versus candidate. Explain:
+
+- what was preserved
+- what was removed
+- what was added from the template
+- any uncertain item that needs user approval
+
+6. Install only after review.
+
+Set the install variables for the current tool:
+
+Claude Code:
+
+TARGET="$HOME/.claude/CLAUDE.md"
+CANDIDATE="$HOME/.claude/CLAUDE.md.candidate"
+
+Codex:
+
+TARGET="${CODEX_HOME:-$HOME/.codex}/AGENTS.md"
+CANDIDATE="${TARGET}.candidate"
+
+After the user approves, create a timestamped backup and replace the target:
+
+ts="$(date +%Y%m%d-%H%M%S)"
+mkdir -p "$(dirname "$TARGET")"
+[ -f "$TARGET" ] && cp "$TARGET" "$TARGET.backup.$ts"
+cp "$CANDIDATE" "$TARGET"
+
+If the user asked for a fully autonomous install, use the same backup flow and
+report the backup path.
+
+7. Verify loading.
+
+- Claude Code: start a fresh session or clear/reload context, then use the
+  available context command to confirm the loaded CLAUDE.md files.
+- Codex: start a fresh session, then use the available status/log command to
+  confirm the loaded AGENTS.md chain and config.
+
+Report the final target path, backup path, key preserved local sections, and any
+follow-up needed. If you cannot prove the tool loaded the file, say so clearly.
+```
+
 ## Adapt
 
 Keep global files about durable operating style. Put project rules in the
