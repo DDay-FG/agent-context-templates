@@ -113,8 +113,9 @@ memory.
   Use `/rewind` when abandoning a path.
 - Send large research or broad file reads to subagents only when their compact,
   source-grounded summaries are enough for the main thread.
-- Do not spawn swarms by default. Use zero to two agents unless parallel work
-  reduces real complexity. The parent owns decisions and verification.
+- Delegate independent subtasks to subagents in parallel and keep working while
+  they run; scale the fleet to the task's real structure. The parent owns
+  decisions and verification; preserve subagent caveats.
 - Do not add default plugin or MCP load casually. Check settings before assuming
   tools are available.
 
